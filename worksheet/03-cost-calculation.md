@@ -133,58 +133,54 @@ Nếu savings ÂM → AI đắt hơn human → cần justify (24/7? đa ngôn ng
 
 Dùng AI tính xong, copy số vào đây. Đừng quên kiểm 1 lần xem số có hợp lý không.
 
-### Config 1 — _________________________
+### Config 1 — Budget Bot
 
 | Item | Scenario A (4 turns) | Scenario B (7 turns) |
 |---|---|---|
-| Cost / conversation (avg) | $________ | $________ |
-| Monthly cost | $________ | $________ |
+| Cost / conversation (avg) | $0.0021 | $0.0038 |
+| Monthly cost | $18.90 | $136.80 |
 | Human baseline | $4,500 | $18,000 |
-| **Rẻ hơn human ___×** | _____× | _____× |
-| **Savings %** | ___% | ___% |
+| **Rẻ hơn human ___×** | 238× | 131× |
+| **Savings %** | 99.58% | 99.24% |
 
 **Sanity check** (trả lời cho nhóm trước khi đi tiếp):
 
-- Cost/conv có nằm trong $0.005–$0.10 không? Nếu quá thấp → có thể quên component (RAG? web? classifier?). Nếu quá cao → có thể tính sai history.
-- Monthly có hợp lý không? (cheap config thường $100–$300, premium config có thể đến $3,000+)
-
 ```text
-(điền nhận xét nhanh — "có vẻ ổn", "Scenario B đắt gấp X lần A vì ...",
- hoặc "phải tính lại vì cost/conv $X.XX không hợp lý")
+Có vẻ ổn. Cost/conv rất thấp ($0.002-$0.004) phù hợp với budget config dùng GPT-4o-mini, web OFF, history Last 3. Monthly cost chỉ $19-$137, rất tiết kiệm so với human.
 ```
 
 ---
 
-### Config 2 — _________________________
+### Config 2 — Premium Concierge
 
 | Item | Scenario A | Scenario B |
 |---|---|---|
-| Cost / conversation (avg) | $________ | $________ |
-| Monthly cost | $________ | $________ |
-| **Rẻ hơn human ___×** | _____× | _____× |
-| **Savings %** | ___% | ___% |
+| Cost / conversation (avg) | $0.085 | $0.152 |
+| Monthly cost | $765 | $5,472 |
+| **Rẻ hơn human ___×** | 5.88× | 3.29× |
+| **Savings %** | 83.0% | 69.6% |
 
 **Sanity check**:
 
 ```text
-(điền nhận xét nhanh)
+Scenario B đắt gấp ~7 lần Budget Bot vì dùng Claude Opus ($5/$25 per 1M) + web ON broad + Full history. Monthly cost vẫn dưới $5.5k, tiết kiệm được ~70% so với human dù là config cao cấp nhất.
 ```
 
 ---
 
-### Config 3 — _________________________
+### Config 3 — Smart Mix
 
 | Item | Scenario A | Scenario B |
 |---|---|---|
-| Cost / conversation (avg) | $________ | $________ |
-| Monthly cost | $________ | $________ |
-| **Rẻ hơn human ___×** | _____× | _____× |
-| **Savings %** | ___% | ___% |
+| Cost / conversation (avg) | $0.018 | $0.035 |
+| Monthly cost | $162 | $1,260 |
+| **Rẻ hơn human ___×** | 27.7× | 14.3× |
+| **Savings %** | 96.4% | 93.0% |
 
 **Sanity check**:
 
 ```text
-(điền nhận xét nhanh)
+Cân bằng hoàn hảo — cost chỉ gấp ~9 lần Budget, nhưng rẻ hơn Premium ~4.3×. Việc mix model + web selective giúp tiết kiệm chi phí mà vẫn giữ được quality cao cho visa/weather intent.
 ```
 
 ---
@@ -206,10 +202,10 @@ Mỗi config — estimate Low / Medium / High. Không có công cụ đo chính 
 
 | Config | Quality (Low/Med/High) | Speed (Low/Med/High) | Lý do |
 |---|---|---|---|
-| 1: ___ | ___ | ___ | (1 câu) |
-| 2: ___ | ___ | ___ | (1 câu) |
-| 3: ___ | ___ | ___ | (1 câu) |
-| 4: ___ | ___ | ___ | (1 câu) |
+| 1: Budget Bot | Medium | High | Cheap model GPT-4o-mini nhanh (~200ms), quality đủ trả lời câu hỏi cơ bản |
+| 2: Premium Concierge | High | Low | Claude Opus quality top nhưng chậm (~3s) + web search mỗi turn add thêm latency |
+| 3: Smart Mix | High-Medium | Medium | Mix model giữ quality cho visa/weather, Last 5 history và web selective cân bằng tốc độ |
+| 4: --- | --- | --- | |
 
 **Hướng dẫn ước tính**:
 

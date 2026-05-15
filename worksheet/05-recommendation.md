@@ -25,20 +25,13 @@ Trước khi viết, thảo luận 1 phút:
 - Nếu sếp nói "chỉ deploy 1 config thôi" — chọn cái nào?
 
 ```text
-(điền 2–4 câu recommend vào đây — ví dụ:
-"Nhóm recommend Smart Mix cho cả 2 scenarios. Lý do: monthly cost vẫn rẻ hơn human
-95% ở cả low và high season, mà quality estimate Medium-High đủ phục vụ khách
-mong đợi info chính xác. Có thể cân nhắc Premium ở high season nếu booking convert
-rate tăng đủ để justify cost." — đây là ví dụ, đừng copy.)
+Nhóm recommend Smart Mix làm config chính chạy quanh năm. Lý do: cân bằng hoàn hảo giữa chi phí ($162-$1,260/tháng) và chất lượng cao. Tiết kiệm >93% so với human ở cả 2 mùa, trong khi vẫn đảm bảo visa/weather info luôn fresh nhờ web selective và model Claude Sonnet cho các intent phức tạp. Nếu ngân sách cực kỳ hạn chế vào mùa thấp điểm, có thể tạm chuyển sang Budget Bot.
 ```
 
 ### Câu 2 — So với human baseline $0.50/conv → tiết kiệm bao nhiêu? Có đắt hơn human ở chỗ nào không?
 
 ```text
-(điền vào đây — ví dụ:
-"Tiết kiệm ___% ở Scenario A, ___% ở Scenario B. Tổng tiết kiệm $___/tháng.
-Tuy nhiên cần justify thêm vì AI không thể replace human cho booking convert —
-1 sales agent vẫn cần thiết. AI thắng ở 24/7 + đa ngôn ngữ + handle volume peak.")
+Tiết kiệm 96.4% ở mùa thấp điểm, 93.0% ở mùa cao điểm. Tổng tiết kiệm $4,338/tháng (so với $4,500 của human) vào thấp điểm và $16,740/tháng (so với $18,000) vào cao điểm. AI không thể thay thế hoàn toàn nhân viên cho việc booking, nhưng AI thắng ở 24/7 hoạt động, hỗ trợ đa ngôn ngữ, và xử lý được volume đột biến vào mùa cao điểm mà không cần tuyển thêm nhân sự tạm thời.
 ```
 
 ### Câu 3 — Khi nào nên upgrade / downgrade config?
@@ -50,10 +43,7 @@ Trước khi viết, tự hỏi:
 - Có signal nào báo nên chuyển sang Premium? (mùa cao điểm bắt đầu? customer feedback?)
 
 ```text
-(điền vào đây — ví dụ:
-"Nên upgrade lên Premium khi: monthly conv > 50,000 + quality complaint > 5%
-+ approaching peak season (Tết, lễ hội). Nên downgrade về Budget khi: monthly
-conv < 5,000 + low season + revenue per booking < $X.")
+Nên upgrade lên Premium Concierge khi: monthly conversations > 40,000 + quality complaint rate > 5% + bắt đầu vào mùa cao điểm (Tết Nguyên Đán, mùa hè). Nên downgrade về Budget Bot khi: monthly conv < 5,000 + mùa thấp điểm kéo dài + tỷ lệ conversion booking không tăng đủ để justify chi phí Smart Mix.
 ```
 
 ### Câu 4 — Rủi ro lớn nhất của config được chọn?
@@ -66,11 +56,7 @@ Trước khi viết, tự hỏi:
 - Có mitigation plan không?
 
 ```text
-(điền vào đây — ví dụ:
-"Rủi ro chính: provider tăng giá API → margin co lại. Mitigation: monitor cost
-hàng tháng, có sẵn fallback sang DeepSeek V4 Pro nếu OpenAI/Anthropic tăng >30%.
-Rủi ro phụ: web search OFF có thể dẫn đến visa info outdated → mitigation:
-update RAG hàng tuần cho mục visa, fallback sang human nếu confidence < 0.7.")
+Rủi ro chính: Provider tăng giá API >30% → margin bị co lại. Mitigation: Monitor cost hàng tháng, có sẵn fallback sang DeepSeek V4 Pro ($1.74/$3.48) thay vì Claude Sonnet nếu giá Anthropic tăng. Rủi ro phụ: Web search thất bại → visa info outdated. Mitigation: Update RAG visa policy hàng tuần, fallback sang human ngay nếu bot không có đủ thông tin chắc chắn.
 ```
 
 ---
@@ -80,8 +66,7 @@ update RAG hàng tuần cho mục visa, fallback sang human nếu confidence < 0
 Tổng hợp 4 câu trên thành 1 paragraph 5–7 câu — đây là phần nhóm sẽ đọc / chiếu khi present.
 
 ```text
-(viết paragraph vào đây — đọc to lên để check có gọn không, có rõ không.
- Nếu lan man → cắt xuống. Nếu trống rỗng → bổ sung số cụ thể.)
+Nhóm chúng tôi đề xuất triển khai Smart Mix làm giải pháp chính cho chatbot AI. Với chi phí chỉ $162/tháng mùa thấp điểm và $1,260/tháng mùa cao điểm, config này tiết kiệm được 93-96% so với chi phí nhân viên ($4,500-$18,000/tháng). Sự kết hợp giữa GPT-4o-mini cho câu hỏi thông thường và Claude Sonnet 4.6 cho visa/policy, cùng web search chỉ bật cho 2 intent quan trọng, giúp cân bằng hoàn hảo giữa chi phí và chất lượng. Dù có chi phí cao hơn Budget Bot ~8.5 lần, Smart Mix tránh được rủi ro thông tin outdated và mất context, đảm bảo trải nghiệm khách hàng tốt mà vẫn tiết kiệm cực lớn so với dùng nhân viên hoàn toàn.
 ```
 
 ---
@@ -92,70 +77,70 @@ Chia 5 phút thành 5 nhịp. 1 người trong nhóm chính phụ trách 1 nhị
 
 ### Nhịp 0:00 – 0:30 — Base flow + 3 knobs đã chọn
 
-Ai trình bày: __________
+Ai trình bày: **Lê Quang Minh**
 
 Nói gì:
 
 ```text
-(viết 2 câu vào đây)
+Chúng tôi có base flow gồm intent classification → routing → RAG/web search → response generation. 3 knobs chính là model tier, web search strategy, và history management mà chúng tôi tweak để tạo 3 config khác biệt.
 ```
 
 ### Nhịp 0:30 – 1:00 — Config overview
 
-Ai trình bày: __________
+Ai trình bày: **Nguyễn Việt Hoàng**
 
 Nói gì (đọc nhanh tên + knobs 3 configs):
 
 ```text
-(viết 3 dòng vào đây)
+1. Budget Bot: GPT-4o-mini, web OFF, Last 3 history — cực rẻ
+2. Premium Concierge: Claude Opus, web ON broad, Full history — chất lượng cao nhất
+3. Smart Mix: Mix model, web selective, Last 5 history — cân bằng chi phí/chất lượng
 ```
 
 ### Nhịp 1:00 – 2:00 — Cost comparison
 
-Ai trình bày: __________
+Ai trình bày: **Nguyễn Việt Hoàng**
 
 Nói gì (chiếu bảng so sánh, highlight rẻ nhất / đắt nhất):
 
 ```text
-(viết 3–4 câu vào đây)
+Budget Bot rẻ nhất chỉ $19-$137/tháng. Premium Concierge đắt nhất $765-$5,472/tháng. Smart Mix ở giữa với $162-$1,260/tháng. Tất cả configs đều tiết kiệm >69% so với human baseline $0.50/conv.
 ```
 
 ### Nhịp 2:00 – 3:00 — Key insight
 
-Ai trình bày: __________
+Ai trình bày: **Lê Quang Minh**
 
 Nói gì (knob nào ảnh hưởng cost nhiều nhất + tại sao):
 
 ```text
-(viết 2–3 câu vào đây)
+Model tier là knob ảnh hưởng cost nhiều nhất — chọn Claude Opus thay vì GPT-4o-mini làm tăng chi phí ~40×. Web search và history management chỉ ảnh hưởng ~10-15% tổng chi phí.
 ```
 
 ### Nhịp 3:00 – 4:30 — Recommendation + justification
 
-Ai trình bày: __________ (thường là người mạnh nhất trong nhóm)
+Ai trình bày: **Lê Quang Minh**
 
 Nói gì (đọc paragraph "Final answer" ở trên):
 
 ```text
-(copy paragraph vào đây)
+Nhóm chúng tôi đề xuất triển khai Smart Mix làm giải pháp chính. Với chi phí $162-$1,260/tháng, tiết kiệm 93-96% so với nhân viên. Mix model + web selective cân bằng chi phí và chất lượng, đảm bảo visa/weather info luôn fresh mà không phí phạm.
 ```
 
 ### Nhịp 4:30 – 5:00 — Hardest question prep
 
-Ai trình bày: __________
+Ai trình bày: **Nguyễn Việt Hoàng**
 
 Nhóm dự đoán câu hỏi khó nhất sẽ bị hỏi là gì?
 
 ```text
-(viết câu hỏi vào đây — ví dụ:
-"Tại sao không chọn Budget Bot cho high season? Premium tăng cost nhiều hơn
-benefit có không?")
+Tại sao không dùng Budget Bot cho cả năm mà phải chi thêm tiền cho Smart Mix? Rủi ro của Budget Bot có thực sự lớn không?
 ```
 
 Câu trả lời sẵn:
 
 ```text
-(viết câu trả lời 2–3 câu)
+Budget Bot không có web search → visa info có thể outdated gây misunderstanding khách hàng. Smart Mix chỉ tốn thêm ~$140/tháng mùa thấp điểm nhưng tránh được rủi ro khách hàng phàn nàn. ROI cực kỳ dương khi chỉ thêm ít chi phí mà cải thiện đáng kể trải nghiệm.
 ```
 
 ---
@@ -173,9 +158,9 @@ Sẵn sàng cho 1 câu từ class + 1 câu từ instructor. Không cần lo lắ
 Suy nghĩ trước câu trả lời ngắn:
 
 ```text
-1. (viết câu trả lời ngắn)
-2. (viết câu trả lời ngắn)
-3. (viết câu trả lời ngắn — phụ thuộc nhóm X present gì, có thể skip)
+1. Model tier — vì giá model strong đắt hơn cheap ~40×, ảnh hưởng lớn nhất đến total cost.
+2. Vẫn sống được — Smart Mix vẫn tiết kiệm >85% so với human ngay cả khi giá ×2. Chỉ Premium có thể bị ảnh hưởng nhiều hơn.
+3. (phụ thuộc nhóm khác)
 ```
 
 ---
