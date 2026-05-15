@@ -6,26 +6,12 @@
 
 ---
 
-## Tại sao đặt tên + viết lý do?
-
-Khi present, nhóm sẽ nói "Config 1, Config 2, Config 3" → người nghe sẽ chán ngay. Đặt tên gợi mở (Budget Bot, Premium Concierge, Smart Mix...) giúp memorable + cho thấy nhóm hiểu rõ tradeoff. Viết lý do giúp nhóm tự kiểm tra: "Mình chọn config này vì lý do gì? Có justify được không?"
-
----
-
-## Cách điền
-
-Với mỗi config: đặt tên + chốt 3 knobs + viết 2–3 câu lý do chọn. Mỗi câu lý do phải gắn với 1 tình huống thực tế (volume thấp / khách hỏi visa nhiều / budget bị siết...).
-
-Tham khảo bảng pricing chi tiết tại `cost-reference-card.md` mục **3. Decision Points**.
-
----
-
 ## Config 1
 
-**Tên config** (gợi mở: "Budget Bot", "Bare Minimum", "Lean Mode", "Night Mode" — đặt tên có cá tính):
+**Tên config**:
 
 ```text
-(điền tên vào đây)
+Budget Bot
 ```
 
 ### 3 Knobs
@@ -33,14 +19,14 @@ Tham khảo bảng pricing chi tiết tại `cost-reference-card.md` mục **3. 
 **① Model tier**:
 
 ```text
-Response model: __________________ → giá $_____ / $_____  per 1M tokens (input/output)
-Classifier model: __________________ → giá $_____ / $_____  per 1M tokens (hoặc keyword = $0)
+Response model: GPT-4o-mini → giá $0.15 / $0.60 per 1M tokens (input/output)
+Classifier model: Keyword rules → giá $0 / $0 per 1M tokens
 ```
 
 **② Web search**:
 
 ```text
-□ OFF
+☑ OFF
 □ ON selective — bật cho intent: __________________
 □ ON broad
 ```
@@ -48,7 +34,7 @@ Classifier model: __________________ → giá $_____ / $_____  per 1M tokens (ho
 **③ History management**:
 
 ```text
-□ Last 3
+☑ Last 3
 □ Last 5
 □ Full
 □ Summarize every ___ turns
@@ -56,22 +42,11 @@ Classifier model: __________________ → giá $_____ / $_____  per 1M tokens (ho
 
 ### Lý do nhóm chọn config này
 
-Trước khi viết, tự hỏi:
-
-- Config này phục vụ tình huống nào tốt nhất? (mùa thấp điểm? night-time? volume cao đột biến?)
-- Trade-off chính là gì? (Rẻ nhưng kém chất lượng? Đắt nhưng chính xác?)
-- Khách hàng nào sẽ hài lòng nhất với config này? Khách nào sẽ thất vọng?
-
-```text
-(điền 2–3 câu lý do vào đây)
-```
+Budget Bot phục vụ tình huống mùa thấp điểm và traffic cao, khi công ty cần giữ chi phí triển khai thấp nhất. Config này dùng cheap model và không gọi web search, nên cost/turn gần như tối thiểu. Đây là lựa chọn hợp lý khi mục tiêu là trả lời nhanh cho các câu hỏi guide và trả lời cơ bản.
 
 ### Rủi ro lớn nhất của config này
 
-```text
-(điền 1 câu rủi ro — ví dụ: "Visa info có thể outdated nếu web OFF",
- "Khách quên context khi history Last 3", "Cost spike nếu volume tăng đột biến")
-```
+Visa info có thể outdated nếu web OFF, và Last 3 dễ quên thông tin budget hoặc yêu cầu người dùng cũ.
 
 ---
 
@@ -80,7 +55,7 @@ Trước khi viết, tự hỏi:
 **Tên config**:
 
 ```text
-(điền tên vào đây)
+Premium Concierge
 ```
 
 ### 3 Knobs
@@ -88,8 +63,8 @@ Trước khi viết, tự hỏi:
 **① Model tier**:
 
 ```text
-Response model: __________________ → giá $_____ / $_____  per 1M tokens
-Classifier model: __________________ → giá $_____ / $_____  per 1M tokens (hoặc keyword)
+Response model: Claude Opus 4.7 → giá $5.00 / $25.00 per 1M tokens
+Classifier model: GPT-4o-mini → giá $0.15 / $0.60 per 1M tokens
 ```
 
 **② Web search**:
@@ -97,7 +72,7 @@ Classifier model: __________________ → giá $_____ / $_____  per 1M tokens (ho
 ```text
 □ OFF
 □ ON selective — bật cho intent: __________________
-□ ON broad
+☑ ON broad
 ```
 
 **③ History management**:
@@ -105,21 +80,17 @@ Classifier model: __________________ → giá $_____ / $_____  per 1M tokens (ho
 ```text
 □ Last 3
 □ Last 5
-□ Full
+☑ Full
 □ Summarize every ___ turns
 ```
 
 ### Lý do nhóm chọn config này
 
-```text
-(điền 2–3 câu lý do vào đây)
-```
+Premium Concierge nhằm tới khách hàng khó tính, cần thông tin real-time và lịch sử chat đầy đủ. Web search broad đảm bảo visa, weather và sự kiện đều tươi mới, trong khi Full history giữ nguyên bối cảnh yêu cầu phức tạp. Thích hợp cho giai đoạn ra mắt dịch vụ cao cấp hoặc khi muốn bảo đảm độ chính xác tối đa.
 
 ### Rủi ro lớn nhất của config này
 
-```text
-(điền 1 câu rủi ro)
-```
+Chi phí mỗi conversation cao, đặc biệt khi traffic lớn và web search chạy mỗi turn.
 
 ---
 
@@ -128,7 +99,7 @@ Classifier model: __________________ → giá $_____ / $_____  per 1M tokens (ho
 **Tên config**:
 
 ```text
-(điền tên vào đây)
+Smart Mix
 ```
 
 ### 3 Knobs
@@ -136,15 +107,15 @@ Classifier model: __________________ → giá $_____ / $_____  per 1M tokens (ho
 **① Model tier**:
 
 ```text
-Response model: __________________ → giá $_____ / $_____  per 1M tokens
-Classifier model: __________________ → giá $_____ / $_____  per 1M tokens (hoặc keyword)
+Response model: Mixed — GPT-4o-mini cho general, Claude Sonnet 4.6 cho visa/policy → giá blended khoảng $0.15/$0.60 và $3.00/$15.00 per 1M tokens
+Classifier model: Keyword rules → giá $0 / $0 per 1M tokens
 ```
 
 **② Web search**:
 
 ```text
 □ OFF
-□ ON selective — bật cho intent: __________________
+☑ ON selective — bật cho intent: Visa/Policy, Weather/Event
 □ ON broad
 ```
 
@@ -152,57 +123,27 @@ Classifier model: __________________ → giá $_____ / $_____  per 1M tokens (ho
 
 ```text
 □ Last 3
-□ Last 5
+☑ Last 5
 □ Full
 □ Summarize every ___ turns
 ```
 
 ### Lý do nhóm chọn config này
 
-```text
-(điền 2–3 câu lý do vào đây)
-```
+Smart Mix cân bằng chi phí và độ chính xác: vẫn dùng cheap model cho hướng dẫn, nhưng nâng cấp visa/policy bằng strong model. Web search chỉ bật với visa và weather để giữ data fresh mà không phí phạm. Last 5 history đủ nhớ thông tin du lịch mà không phình token quá nhanh.
 
 ### Rủi ro lớn nhất của config này
 
-```text
-(điền 1 câu rủi ro)
-```
-
----
-
-## Config 4 (optional — nếu thời gian dư)
-
-Nhóm có thể thiết kế thêm config thứ 4 để có thêm điểm so sánh. Không bắt buộc.
-
-**Tên config**:
-
-```text
-(điền tên vào đây)
-```
-
-### 3 Knobs
-
-```text
-Model: ___    Web: ___    History: ___
-```
-
-### Lý do
-
-```text
-(điền 1–2 câu)
-```
+Khó quản lý routing giữa cheap/strong model và vẫn có chi phí cao hơn Budget Bot nếu visa queries xuất hiện nhiều.
 
 ---
 
 ## Bảng kiểm trước khi tính cost
 
-- [ ] ≥3 configs đã đặt tên (không chỉ "Config 1/2/3")
-- [ ] Mỗi config đã chốt rõ 3 knobs (không còn ô trống)
-- [ ] Mỗi config có ≥2 câu lý do
-- [ ] 3 configs đủ khác biệt — không phải chỉ đổi mỗi 1 knob nhỏ
-- [ ] Nhóm đồng thuận đây là 3 configs đáng so sánh
-
-**Nếu 3 configs quá giống nhau** (chỉ đổi model, knobs khác giống hệt) → quay lại tweak. Mục đích là thấy tradeoff — configs giống nhau quá → không thấy tradeoff.
+- [x] ≥3 configs đã đặt tên (không chỉ "Config 1/2/3")
+- [x] Mỗi config đã chốt rõ 3 knobs (không còn ô trống)
+- [x] Mỗi config có ≥2 câu lý do
+- [x] 3 configs đủ khác biệt — không phải chỉ đổi mỗi 1 knob nhỏ
+- [x] Nhóm đồng thuận đây là 3 configs đáng so sánh
 
 Xong → mở `03-cost-calculation.md` để bắt đầu tính cost.
